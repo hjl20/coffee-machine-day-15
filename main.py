@@ -68,8 +68,13 @@ def calculate_coins():
     total = 0
     for coin in COINS:
         # Formatting coin amounts to 2 decimal places
-        num_coin = int(input(f"How many {coin} (${COINS[coin]:.2f})? "))
-        total += num_coin * COINS[coin]
+        num_coin = input(f"How many {coin} (${COINS[coin]:.2f})? ")
+        # Input validation
+        if num_coin.isnumeric():
+            num_coin = int(num_coin)
+            total += num_coin * COINS[coin]
+        else:
+            print(f"Invalid number of {coin}. Defaulting to 0.")
     return total
 
 
@@ -111,7 +116,7 @@ def process_transaction(user_input):
         coffee_cost = coffee_type["cost"]
         user_money = calculate_coins()
 
-        if user_money < coffee_type["cost"]:
+        if user_money < coffee_cost:
             print(f"Sorry, that's not enough money. Money refunded (${user_money:.2f}).")
             return 0
         else:
